@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz cumpleaños!</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to top, #ffcccb, #ffe6e6);
+      font-family: 'Jua', sans-serif;
+    }
+
+    .globo {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle, #ff6666, #cc0000);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      cursor: pointer;
+      animation: flotar linear infinite;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-150px); }
+    }
+
+    .mensaje {
+      position: fixed;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 36px;
+      color: #cc0000;
+      display: none;
+      font-family: 'Dancing Script', cursive;
+      animation: aparecer 2s ease;
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="mensaje" class="mensaje">¡Feliz cumpleaños, mi amor! 🎈🎉</div>
+
+<script>
+  const TOTAL_GLOBOS = 20;
+  let globosExplotados = 0;
+
+  function crearGlobo() {
+    const globo = document.createElement('div');
+    globo.classList.add('globo');
+    globo.style.left = Math.random() * (window.innerWidth - 60) + 'px';
+    globo.style.animationDuration = (5 + Math.random() * 5) + 's';
+    document.body.appendChild(globo);
+
+    globo.addEventListener('click', () => {
+      globo.remove();
+      globosExplotados++;
+      if (globosExplotados >= TOTAL_GLOBOS) {
+        document.getElementById('mensaje').style.display = 'block';
+      }
+    });
+
+    // Eliminar globos que salen de la pantalla para no sobrecargar
+    globo.addEventListener('animationend', () => {
+      globo.remove();
+    });
+  }
+
+  // Crear globos continuamente
+  setInterval(crearGlobo, 800);
+</script>
+
+</body>
+</html>
